@@ -257,6 +257,27 @@ oahu_education <- get_acs(
 ### Mapping
 
 ```{r, message=FALSE, warning=FALSE, results='hide'}
+oahu_education_map <- ggplot(oahu_education) +
+  geom_sf_interactive(
+    aes(
+      fill = percent_bachelorsE,
+      tooltip = paste(NAME, ": ", percent_bachelorsE, "%"),
+      data_id = NAME)) +
+  scale_fill_gradient2(
+    low="gray",
+    mid="darkgreen",
+    high="lightgreen") +
+  theme_void() 
+
+girafe(ggobj = oahu_education_map, width = 700, height = 400)
+
+
+```
+
+### Time Series
+
+```{r, message=FALSE, warning=FALSE, results='hide'}
+
 years <- 2018:2023
 names(years) <- years
 
@@ -287,12 +308,6 @@ ggplot(oahu_education_2018_2023, aes(x = year, y = estimate)) +
     y = "Percent with Bachelor's or Higher",
     caption = "Source: U.S. Census Bureau, American Community Survey\nShaded area represents margin of error"
   )
-```
-
-### Time Series
-
-```{r, message=FALSE, warning=FALSE, results='hide'}
-
 
 ```
 
